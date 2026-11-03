@@ -1,9 +1,22 @@
 import type { Recipe } from "../domain/types";
 
-export function Home({ recipes, onSelect }: { recipes: Recipe[]; onSelect: (r: Recipe) => void }) {
+export function Home({
+  recipes,
+  onSelect,
+  onLogs,
+}: {
+  recipes: Recipe[];
+  onSelect: (r: Recipe) => void;
+  onLogs: () => void;
+}) {
   return (
     <main className="mx-auto max-w-md px-4 py-6">
-      <h1 className="text-2xl font-bold">Coffee Timer</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold">Coffee Timer</h1>
+        <button onClick={onLogs} className="rounded-lg border border-line bg-card px-4 py-2 font-semibold">
+          ログ
+        </button>
+      </div>
       <ul className="mt-6 space-y-3">
         {recipes.map((r) => (
           <li key={r.id}>

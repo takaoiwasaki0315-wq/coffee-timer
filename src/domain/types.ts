@@ -31,7 +31,34 @@ export interface Recipe {
   /** タイマー外の仕上げ（バイパス等） */
   finishNote?: string;
   steps: Step[];
+  /** ログが1件もないときの初期値 */
+  defaults?: { waterTempC?: number; grind?: number; bypassG?: number };
   source?: string;
   /** 同梱テンプレートは編集不可（複製してから編集） */
   builtIn: boolean;
+}
+
+export type RoastLevel = "light" | "medium" | "dark";
+
+/** 1回の抽出記録（SPEC.md §2） */
+export interface BrewLog {
+  id: string;
+  recipeId: string;
+  /** レシピが後で消えても読めるように名前も残す */
+  recipeName: string;
+  /** ISO 8601 */
+  brewedAt: string;
+  beanName: string;
+  roastLevel?: RoastLevel;
+  /** YYYY-MM-DD（端末のローカル日付） */
+  roastDate?: string;
+  grinder: string;
+  grind: number;
+  waterTempC: number;
+  bypassG: number;
+  totalSec: number;
+  /** 1〜5 */
+  rating: number;
+  memo: string;
+  interrupted: boolean;
 }

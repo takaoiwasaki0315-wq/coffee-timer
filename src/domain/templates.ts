@@ -21,6 +21,8 @@ export const TEMPLATES: Recipe[] = [
         note: "サーバーの抽出液200mlでスイッチを閉じ、ドリッパーを外して「完了」",
       },
     ],
+    // ユーザーの常用条件（豆15g / 86℃ / TIMEMORE S5 で 6.5）
+    defaults: { waterTempC: 86, grind: 6.5, bypassG: 40 },
     // TODO: ユーザーが参照している YouTube 動画の URL を追記
     source: "YouTube のおすすめレシピ（URL 未確認）",
     builtIn: true,

@@ -1,14 +1,18 @@
 import { stepLabel } from "../domain/labels";
-import type { Recipe } from "../domain/types";
+import { daysSinceRoast } from "../domain/log";
+import type { BrewLog, Recipe } from "../domain/types";
 import { formatSec } from "../lib/format";
 import { wakeLockSupported } from "../lib/useWakeLock";
 
 export function Ready({
   recipe,
+  lastLog,
   onStart,
   onBack,
 }: {
   recipe: Recipe;
+  /** このレシピの前回のログ */
+  lastLog?: BrewLog;
   onStart: () => void;
   onBack: () => void;
 }) {
@@ -21,6 +25,8 @@ export function Ready({
       <p className="mt-1 text-muted">
         豆{recipe.doseG}g・注湯{recipe.totalWaterG}g
       </p>
+
+      {lastLog && <LastLog log={lastLog} />}
 
       {recipe.prep && (
         <section className="mt-5 rounded-xl border border-line bg-card p-4">
@@ -42,7 +48,9 @@ export function Ready({
       </ol>
 
       <section className="mt-5 space-y-2 rounded-xl bg-warn-bg p-4 text-sm">
-        <p>🔕 消音モード（サイレントスイッチ）がオンだとビープ音が鳴りません。</p>
+        <p className="text-base font-bold">
+          🔕 消音モードがオンだと、ビープ音も読み上げも鳴りません。消音モードがオフになっているか確認してください。
+        </p>
         <p>🔊 音量を上げておいてください。</p>
         {!wakeLockSupported && (
           <p>📱 この端末では画面を点けたままにできません。設定で自動ロックをオフにしてください。</p>
@@ -56,5 +64,24 @@ export function Ready({
         注ぎ始めと同時にタップ
       </button>
     </main>
+  );
+}
+
+function LastLog({ log }: { log: BrewLog }) {
+  const days = log.roastDate ? daysSinceRoast(log.roastDate, new Date()) : undefined;
+  return (
+    <section className="mt-5 rounded-xl border border-line bg-card p-4">
+      <h2 className="text-sm font-semibold text-muted">
+        前回（{new Date(log.brewedAt).toLocaleDateString("ja-JP")}）
+      </h2>
+      <p className="mt-1">
+        {log.beanName}
+        {days !== undefined && <span className="text-muted">（焙煎後{days}日目）</span>}
+      </p>
+      <p className="tabular mt-1">
+        挽目 {log.grind}・{log.waterTempC}℃・バイパス {log.bypassG}g・{"★".repeat(log.rating)}
+      </p>
+      {log.memo && <p className="mt-1 text-sm text-muted">{log.memo}</p>}
+    </section>
   );
 }
