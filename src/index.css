@@ -1,16 +1,57 @@
 @import "tailwindcss";
 
+@theme {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-card: var(--card);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-alert: var(--alert);
+  --color-alert-fg: var(--alert-fg);
+  --color-warn-bg: var(--warn-bg);
+}
+
 :root {
   --bg: #f6f1ea;
-  --fg: #3b2a20;
+  --fg: #2e2119;
+  --muted: #7a6a5e;
+  --card: #fffaf4;
+  --line: #e2d6c8;
+  --accent: #3b2a20;
+  --accent-fg: #fffaf4;
+  /* 3・2・1 の画面色。視界の端でも分かる強い色 */
+  --alert: #e8a317;
+  --alert-fg: #1a1209;
+  --warn-bg: #fbecc8;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #1c1612;
+    --bg: #1a1411;
     --fg: #efe6dc;
+    --muted: #a8998c;
+    --card: #251d18;
+    --line: #3a2e26;
+    --accent: #e9d6c1;
+    --accent-fg: #1a1411;
+    --alert: #f0b232;
+    --alert-fg: #1a1209;
+    --warn-bg: #3a2c12;
   }
 }
+
+html,
 body {
   background: var(--bg);
   color: var(--fg);
+  -webkit-tap-highlight-color: transparent;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+}
+.tabular {
+  font-variant-numeric: tabular-nums;
 }
