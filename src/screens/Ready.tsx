@@ -9,18 +9,26 @@ export function Ready({
   lastLog,
   onStart,
   onBack,
+  onEdit,
 }: {
   recipe: Recipe;
   /** このレシピの前回のログ */
   lastLog?: BrewLog;
   onStart: () => void;
   onBack: () => void;
+  /** 同梱テンプレートなら複製してから編集 */
+  onEdit: () => void;
 }) {
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col px-4 py-6">
-      <button onClick={onBack} className="self-start text-sm text-muted">
-        ← レシピ一覧
-      </button>
+      <div className="flex items-center justify-between">
+        <button onClick={onBack} className="text-sm text-muted">
+          ← レシピ一覧
+        </button>
+        <button onClick={onEdit} className="rounded-lg border border-line bg-card px-3 py-1.5 text-sm font-semibold">
+          {recipe.builtIn ? "複製して編集" : "編集"}
+        </button>
+      </div>
       <h1 className="mt-3 text-2xl font-bold">{recipe.name}</h1>
       <p className="mt-1 text-muted">
         豆{recipe.doseG}g・注湯{recipe.totalWaterG}g

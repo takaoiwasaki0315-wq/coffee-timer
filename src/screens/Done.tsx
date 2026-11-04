@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  DEFAULT_GRINDER,
   daysSinceRoast,
   initialForm,
   validateLogForm,
@@ -20,12 +19,14 @@ export function Done({
   recipe,
   result,
   logs,
+  grinder,
   onSave,
   onSkip,
 }: {
   recipe: Recipe;
   result: BrewResult;
   logs: BrewLog[];
+  grinder: string;
   onSave: (log: BrewLog) => Promise<void>;
   onSkip: () => void;
 }) {
@@ -55,7 +56,7 @@ export function Done({
         recipeId: recipe.id,
         recipeName: recipe.name,
         brewedAt: brewedAt.toISOString(),
-        grinder: DEFAULT_GRINDER,
+        grinder,
         totalSec: result.totalSec,
         interrupted,
       });
@@ -145,7 +146,7 @@ export function Done({
         </Field>
 
         <div className="grid grid-cols-3 gap-3">
-          <Field label="挽目" hint={DEFAULT_GRINDER} error={errors.grind}>
+          <Field label="挽目" hint={grinder} error={errors.grind}>
             <input
               inputMode="decimal"
               value={form.grind}

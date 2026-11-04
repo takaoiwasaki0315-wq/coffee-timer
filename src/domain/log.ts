@@ -61,7 +61,7 @@ export function initialForm(recipe: Recipe, logs: BrewLog[]): LogForm {
 }
 
 /** 半角の非負数のみ受け付ける（"6.5" "86"）。"6." "-1" "1e2" などは不可 */
-function parseNumber(s: string): number | undefined {
+export function parseNumber(s: string): number | undefined {
   const t = s.trim();
   return /^\d+(\.\d+)?$/.test(t) ? Number(t) : undefined;
 }
